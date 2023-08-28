@@ -1,0 +1,54 @@
+version: "3"
+services:
+    om-nginx:
+        image: nginx
+        ports:
+            - "${DOCKER_APP_PORT}:80"
+        volumes:
+            - .:/var/www/html
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    om-app:
+        build: ./docker/app
+        environment:
+            WWWUSER: "${WWWUSER}"
+            CRONTAB: "on"
+        volumes:
+            - .:/var/www/html
+    om-mysql:
+        image: mysql:5.7
+        ports:
+            - "${DOCKER_MYSQL_PORT}:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+            MYSQL_DATABASE: "${DB_DATABASE}"
+            MYSQL_USER: "${DB_USERNAME}"
+            MYSQL_PASSWORD: "${DB_PASSWORD}"
+        volumes:
+            - v_om_mysql:/var/lib/mysql
+            - ./docker/mysql/conf.d:/etc/mysql/conf.d
+            - ./docker/mysql/logs:/var/log/mysql
+            - ./docker/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    om-redis:
+        image: redis:alpine
+        ports:
+            - "${DOCKER_REDIS_PORT}:6379"
+        volumes:
+            - v_om_redis:/data
+    om-mongodb:
+        image: mongo
+        restart: always
+        ports:
+            - "${DOCKER_MONGODB_PORT}:27017"
+        environment:
+            MONGO_INITDB_DATABASE: "${MONGO_DB_DATABASE}"
+            MONGO_INITDB_ROOT_USERNAME: "${MONGO_DB_USERNAME}"
+            MONGO_INITDB_ROOT_PASSWORD: "${MONGO_DB_PASSWORD}"
+        volumes:
+            - v_om_mongodb:/data/db
+volumes:
+    v_om_mysql:
+        driver: "local"
+    v_om_redis:
+        driver: "local"
+    v_om_mongodb:
+        driver: "local"
