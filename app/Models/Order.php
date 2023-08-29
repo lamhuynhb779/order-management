@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Scopes\Orders\OrderScope;
+use App\Scopes\Order\OrderScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -13,6 +13,15 @@ class Order extends Model
      * @var string
      */
     protected $table = 'orders';
+
+    /**
+     * Order constructor.
+     */
+    public function __construct(array $attributes = [])
+    {
+        $this->connection = 'mysql';
+        parent::__construct($attributes);
+    }
 
     /**
      * The attributes that are mass assignable.

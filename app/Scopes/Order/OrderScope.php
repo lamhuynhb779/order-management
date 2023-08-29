@@ -1,7 +1,6 @@
 <?php
 
-
-namespace App\Scopes\Orders;
+namespace App\Scopes\Order;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

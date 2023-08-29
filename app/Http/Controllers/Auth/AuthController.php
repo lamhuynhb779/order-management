@@ -17,7 +17,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
         ]);
 
         return new AuthResource($user);
@@ -28,21 +28,21 @@ class AuthController extends Controller
         try {
             $request->validate([
                 'email' => 'email|required',
-                'password' => 'required'
+                'password' => 'required',
             ]);
 
             $credentials = request(['email', 'password']);
 
-            if (!Auth::attempt($credentials)) {
+            if (! Auth::attempt($credentials)) {
                 return response()->json([
                     'status_code' => 500,
-                    'message' => 'Unauthorized'
+                    'message' => 'Unauthorized',
                 ]);
             }
 
             $user = User::where('email', $request->email)->first();
 
-            if (!Hash::check($request->password, $user->password, [])) {
+            if (! Hash::check($request->password, $user->password, [])) {
                 throw new \Exception('Error in Login');
             }
 

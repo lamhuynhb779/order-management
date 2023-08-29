@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Scopes\Orders;
 
 use Illuminate\Database\Eloquent\Builder;

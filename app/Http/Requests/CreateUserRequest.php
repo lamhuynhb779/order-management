@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Contracts\Validation\Validator;
 
 class CreateUserRequest extends BaseRequest
 {
@@ -13,7 +13,7 @@ class CreateUserRequest extends BaseRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required'
+            'password' => 'required',
         ];
     }
 

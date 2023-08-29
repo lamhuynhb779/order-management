@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Eloquents;
 
-class EloquentAddressRepository extends AbstractEloquentRepository
+use App\Repositories\Contracts\AddressRepository;
+
+class EloquentAddressRepository extends AbstractEloquentRepository implements AddressRepository
 {
-
 }

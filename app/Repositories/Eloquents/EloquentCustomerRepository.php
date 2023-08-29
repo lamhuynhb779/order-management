@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Eloquents;
 
-class EloquentCustomerRepository extends AbstractEloquentRepository
+use App\Repositories\Contracts\CustomerRepository;
+
+class EloquentCustomerRepository extends AbstractEloquentRepository implements CustomerRepository
 {
-
 }

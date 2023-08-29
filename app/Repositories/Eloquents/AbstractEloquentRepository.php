@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Eloquents;
 
-use App\Models\User;
 use App\Repositories\Contracts\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,13 +10,6 @@ use Illuminate\Support\Carbon;
 abstract class AbstractEloquentRepository implements BaseRepository
 {
     /**
-     * Name of the Model with absolute namespace
-     *
-     * @var string
-     */
-    protected $modelName;
-
-    /**
      * Instance that extends Illuminate\Database\Eloquent\Model
      *
      * @var Model|Builder
@@ -25,27 +17,19 @@ abstract class AbstractEloquentRepository implements BaseRepository
     protected $model;
 
     /**
-     * get logged in user
-     *
-     * @var User $loggedInUser
-     */
-    protected $loggedInUser;
-
-    /**
      * AbstractEloquentRepository constructor.
      *
-     * @param Model|Builder $model
+     * @param  Model|Builder  $model
      */
     public function __construct(Model $model)
     {
         $this->model = $model;
-        $this->loggedInUser = $this->getLoggedInUser();
     }
 
     /**
      * Get Model instance
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     * @return Builder|Model
      */
     public function getModel()
     {
@@ -53,21 +37,22 @@ abstract class AbstractEloquentRepository implements BaseRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findOne($id, array $relations = null)
     {
         $builder = null;
-        if (!empty($relations)) {
+        if (! empty($relations)) {
             $builder = function (Builder $builder) use ($relations) {
                 return $builder->with($relations);
             };
         }
+
         return $this->findOneBy(['id' => $id], $builder);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findOneBy(array $criteria, \Closure $builder = null)
     {
@@ -75,22 +60,23 @@ abstract class AbstractEloquentRepository implements BaseRepository
         if (is_callable($builder)) {
             $builder($queryBuilder);
         }
+
         return $queryBuilder->first();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findBy(array $searchCriteria = [], \Closure $builder = null, $paginate = true, $getValue = true)
     {
-        $limit = !empty($searchCriteria['limit']) ? (int)$searchCriteria['limit'] : 15; // it's needed for pagination
-        $filter = !empty($searchCriteria['filter']) ? (array)$searchCriteria['filter'] : [];
-        $sort = !empty($searchCriteria['sort']) ? (string)$searchCriteria['sort'] : '';
-        $selected = isset($searchCriteria['selected']) ? (array)$searchCriteria['selected'] : [];
-        $searchFulltext = isset($searchCriteria['search']) ? (array)$searchCriteria['search'] : [];
-        $searchMultiColumn = !empty($searchCriteria['search_columns']) ? (string)$searchCriteria['search_columns'] : null;
+        $limit = ! empty($searchCriteria['limit']) ? (int) $searchCriteria['limit'] : 15; // it's needed for pagination
+        $filter = ! empty($searchCriteria['filter']) ? (array) $searchCriteria['filter'] : [];
+        $sort = ! empty($searchCriteria['sort']) ? (string) $searchCriteria['sort'] : '';
+        $selected = isset($searchCriteria['selected']) ? (array) $searchCriteria['selected'] : [];
+        $searchFulltext = isset($searchCriteria['search']) ? (array) $searchCriteria['search'] : [];
+        $searchMultiColumn = ! empty($searchCriteria['search_columns']) ? (string) $searchCriteria['search_columns'] : null;
 
-        $queryBuilder = $this->model->where(function ($query) use ($searchMultiColumn, $filter, $sort) {
+        $queryBuilder = $this->model->where(function ($query) use ($searchMultiColumn, $filter) {
             $this->applySearchColumnsCriteriaInQueryBuilder($query, $searchMultiColumn);
             $this->applySearchCriteriaInQueryBuilder($query, $filter);
         });
@@ -115,26 +101,21 @@ abstract class AbstractEloquentRepository implements BaseRepository
             return $queryBuilder->paginate($limit);
         }
 
-        if (!$getValue) {
+        if (! $getValue) {
             return $queryBuilder;
         }
 
         return $queryBuilder->get();
     }
 
-    /**
-     * @param Builder $queryBuilder
-     * @param array $searchCriteria
-     * @return mixed
-     */
-    protected function applySearchFulltext($queryBuilder, array $searchCriteria = [])
+    protected function applySearchFulltext(Builder $queryBuilder, array $searchCriteria = []): Builder
     {
         foreach ($searchCriteria as $key => $value) {
             $field = $value['field'];
-            $q = array_map('trim', array_filter(explode(",", $value['value']), 'strlen'));
+            $q = array_map('trim', array_filter(explode(',', $value['value']), 'strlen'));
 
             if (count($q) > 1) {
-                $queryBuilder->where(function($query) use ($field, $q) {
+                $queryBuilder->where(function ($query) use ($field, $q) {
                     foreach ($q as $kS => $vS) {
                         if ($kS === 0) {
                             $query->where($field, 'like', "%$vS%");
@@ -151,15 +132,10 @@ abstract class AbstractEloquentRepository implements BaseRepository
         return $queryBuilder;
     }
 
-
     /**
      * Apply condition on query builder based on search criteria
-     *
-     * @param Builder $queryBuilder
-     * @param array $searchCriteria
-     * @return mixed
      */
-    protected function applySearchCriteriaInQueryBuilder($queryBuilder, array $searchCriteria = [])
+    protected function applySearchCriteriaInQueryBuilder(Builder $queryBuilder, array $searchCriteria = []): Builder
     {
         foreach ($searchCriteria as $key => $value) {
 
@@ -176,7 +152,7 @@ abstract class AbstractEloquentRepository implements BaseRepository
                         'updated_at',
                         'created_at',
                         'publish_time',
-                        'published_date'
+                        'published_date',
                     ]
                 )
             ) {
@@ -191,6 +167,7 @@ abstract class AbstractEloquentRepository implements BaseRepository
                     $fromDate,
                     $toDate,
                 ]);
+
                 continue;
             }
 
@@ -219,8 +196,8 @@ abstract class AbstractEloquentRepository implements BaseRepository
     /**
      * Apply condition on query builder based on search criteria
      *
-     * @param \Illuminate\Database\Query\Builder|\Jenssegers\Mongodb\Eloquent\Builder $queryBuilder
-     * @param string $sortString
+     * @param  \Illuminate\Database\Eloquent\Builder|\Jenssegers\Mongodb\Eloquent\Builder  $queryBuilder
+     * @param  string  $sortString
      * @return mixed
      */
     protected function applySortingInQueryBuilder($queryBuilder, $sortString = null)
@@ -248,9 +225,8 @@ abstract class AbstractEloquentRepository implements BaseRepository
     /**
      * Apply condition on query builder based on search criteria
      *
-     * @param \Illuminate\Database\Query\Builder|\Jenssegers\Mongodb\Eloquent\Builder $queryBuilder
-     * @param array $selectedArray
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder|\Jenssegers\Mongodb\Eloquent\Builder  $queryBuilder
+     * @param  array  $selectedArray
      * @return mixed
      */
     protected function applySelectedInQueryBuilder($queryBuilder, $selectedArray = [])
@@ -272,14 +248,14 @@ abstract class AbstractEloquentRepository implements BaseRepository
                 $queryBuilder->orderByRaw(vsprintf('%s = "%s" %s', [
                     $key,
                     $value,
-                    'DESC'
+                    'DESC',
                 ]));
             }
         } else {
             $queryBuilder->orderByRaw(vsprintf('%s = "%s" %s', [
                 $key,
                 $values,
-                'DESC'
+                'DESC',
             ]));
         }
 
@@ -287,7 +263,7 @@ abstract class AbstractEloquentRepository implements BaseRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function save(array $data)
     {
@@ -295,7 +271,7 @@ abstract class AbstractEloquentRepository implements BaseRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function update(Model $model, array $data)
     {
@@ -312,13 +288,11 @@ abstract class AbstractEloquentRepository implements BaseRepository
         $model->save();
 
         // get updated model from database
-        $model = $this->findOne($model->id);
-
-        return $model;
+        return $this->findOne($model->id);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findIn($key, array $values)
     {
@@ -326,8 +300,8 @@ abstract class AbstractEloquentRepository implements BaseRepository
     }
 
     /**
-     * @param Model $model
      * @return bool|mixed|null
+     *
      * @throws \Exception
      */
     public function delete(Model $model)
@@ -336,24 +310,6 @@ abstract class AbstractEloquentRepository implements BaseRepository
     }
 
     /**
-     * get loggedIn user
-     *
-     * @return User
-     */
-    protected function getLoggedInUser()
-    {
-        $user = user();
-
-        if ($user instanceof User) {
-            return $user;
-        } else {
-            return new User();
-        }
-    }
-
-    /**
-     * @param Model $model
-     * @param array $data
      * @return Builder|Model|object|null
      */
     public function updateMongo(Model $model, array $data)
@@ -371,9 +327,7 @@ abstract class AbstractEloquentRepository implements BaseRepository
         $model->save();
 
         // get updated model from database
-        $model = $this->findOneBy(['_id' => $model->_id]);
-
-        return $model;
+        return $this->findOneBy(['_id' => $model->_id]);
     }
 
     /**
@@ -388,7 +342,7 @@ abstract class AbstractEloquentRepository implements BaseRepository
 
         // Remove some default scope
         $exceptions = [
-            'Illuminate\Database\Eloquent\SoftDeletingScope'
+            'Illuminate\Database\Eloquent\SoftDeletingScope',
         ];
         foreach ($exceptions as $item) {
             unset($scopes[$item]);
@@ -404,15 +358,15 @@ abstract class AbstractEloquentRepository implements BaseRepository
     /**
      * Apply condition on query builder based on search criteria
      *
-     * @param Object $queryBuilder
-     * @param string|null $search
+     * @param  object  $queryBuilder
      * @return mixed
      */
     protected function applySearchColumnsCriteriaInQueryBuilder($queryBuilder, ?string $search)
     {
-        if (!$search) {
+        if (! $search) {
             return $queryBuilder;
         }
+
         return $queryBuilder->search($search, false);
     }
 }
