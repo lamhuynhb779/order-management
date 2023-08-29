@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
 {
-    use HasFactory;
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'states';
 }
