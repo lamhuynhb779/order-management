@@ -18,4 +18,7 @@ Route::get('/', function () {
     return view('homepage');
 });
 
-Route::get('/orders', [OrderController::class, 'index']);
+Route::group(['prefix' => '/orders', 'middleware' => []], function () {
+    Route::get('/', [OrderController::class, 'index']);
+    Route::post('/', [OrderController::class, 'store']);
+});

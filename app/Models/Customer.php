@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Scopes\Orders\CustomerScope;
+use App\Scopes\Customer\CustomerScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model

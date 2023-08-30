@@ -10,6 +10,6 @@ class OrderScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('order.status', 1);
+        $builder->where('orders.status', 1);
     }
 }

@@ -15,15 +15,6 @@ class Order extends Model
     protected $table = 'orders';
 
     /**
-     * Order constructor.
-     */
-    public function __construct(array $attributes = [])
-    {
-        $this->connection = 'mysql';
-        parent::__construct($attributes);
-    }
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array

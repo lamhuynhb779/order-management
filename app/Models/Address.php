@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Scopes\Orders\AddressScope;
+use App\Scopes\Address\AddressScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
@@ -13,6 +13,8 @@ class Address extends Model
      * @var string
      */
     protected $table = 'addresses';
+
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -27,13 +29,6 @@ class Address extends Model
         'district_id',
         'ward_id',
     ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
 
     protected $casts = [
         'address' => 'string',

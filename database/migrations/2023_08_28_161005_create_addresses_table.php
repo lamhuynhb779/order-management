@@ -17,7 +17,6 @@ class CreateAddressesTable extends Migration
             $table->bigIncrements('id');
             $table->string('address')->nullable();
             $table->string('full_address')->nullable();
-            $table->unsignedBigInteger('country_id')->index();
             $table->unsignedBigInteger('province_id')->index();
             $table->unsignedBigInteger('district_id')->index();
             $table->unsignedBigInteger('ward_id')->index();
