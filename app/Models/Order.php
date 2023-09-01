@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Scopes\Order\OrderScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
@@ -46,5 +48,20 @@ class Order extends Model
     {
         parent::boot();
         static::addGlobalScope(new OrderScope);
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
+    public function shippingAddress(): hasOne
+    {
+        return $this->hasOne(Address::class, 'id', 'shipping_address_id');
+    }
+
+    public function recipientAddress(): hasOne
+    {
+        return $this->hasOne(Address::class, 'id', 'recipient_address_id');
     }
 }
