@@ -47,6 +47,7 @@ $(document).ready(function(){
                             data += '<td>' + order.shipping_date + '</td>';
                             data += '<td>' + order.expected_delivery_date + '</td>';
                             data += '<td>'+ convertStateName(order.state_id) +'</td>';
+                            data += '</tr>';
                             $('#order-list').append(data);
                         });
                     }

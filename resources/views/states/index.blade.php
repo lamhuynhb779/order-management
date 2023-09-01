@@ -36,16 +36,11 @@
                 <div class="box">
                     <!-- Box Head -->
                     <div class="box-head">
-                        <h2 class="left">Shipping Orders</h2>
+                        <h2 class="left">State management</h2>
                         <div class="right">
-                            <select name="search-options" id="search-options" class="field small-field left">
-                                <option value="order_number">Order number</option>
-                                <option value="customer_name">Customer name</option>
-                                <option value="shipping_date">Shipping date</option>
-                            </select>
-                            <input type="text" class="field small-field" id="search-value"/>
-                            <input type="date" class="field small-field" id="search-date"/>
-                            <input type="submit" class="button-search" value="search" />
+                            <label>search articles</label>
+                            <input type="text" class="field small-field" />
+                            <input type="submit" class="button" value="search" />
                         </div>
                     </div>
                     <!-- End Box Head -->
@@ -53,25 +48,34 @@
                     <div class="table">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
-                                <th width="13"><input type="checkbox" class="checkbox" /></th>
                                 <th>Order number</th>
                                 <th>Customer name</th>
                                 <th>Shipping date</th>
                                 <th>Expected delivery date</th>
                                 <th>State</th>
+                                <th>Action</th>
                             </tr>
-                            <tbody id="order-list">
+                            <meta name="csrf-token" content="{{ csrf_token() }}">
                             @foreach ($orders as $key => $order)
                                 <tr class="{{ $key % 2 === 0 ? '' : 'odd' }}">
-                                    <td><input type="checkbox" class="checkbox" /></td>
                                     <td><h3><a href="{{url('orders/' . $order->id)}}">{{$order->code}}</a></h3></td>
                                     <td>{{$order->customer->name}}</td>
                                     <td>{{$order->shipping_date}}</td>
                                     <td>{{$order->expected_delivery_date}}</td>
-                                    <td>{{\App\Helpers\Order\OrderHelper::getState($order->state_id)}}</td>
+                                    <td>
+                                        <select name="state-options" id="state-options" class="field small-field left">
+                                            @foreach($states as $state)
+                                                @if($state->id === $order->state_id || $state->id === ($order->state_id + 1))
+                                                    <option value="{{$state->id}}" {{$order->state_id === $state->id ? 'selected': ''}}>{{$state->name}}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <a href="" class="ico btn-update" data-id="{{$order->id}}" data-state="{{$order->state_id}}">Update</a>
+                                    </td>
                                 </tr>
                             @endforeach
-                            </tbody>
                         </table>
                         <!-- Pagging -->
                         <div class="pagging">
@@ -85,8 +89,6 @@
                 <!-- End Box -->
             </div>
             <!-- End Content -->
-            <!-- Sidebar -->
-            <!-- End Sidebar -->
             <div class="cl">&nbsp;</div>
         </div>
         <!-- Main -->
@@ -104,6 +106,5 @@
 </div>
 <!-- End Footer -->
 </body>
-<script src="{{ asset('js/common.js')}}"></script>
-<script src="{{ asset('js/homepage.js')}}"></script>
+<script src="{{ asset('js/order.js')}}"></script>
 </html>

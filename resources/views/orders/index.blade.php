@@ -68,7 +68,7 @@
                                 <th>Order number</th>
                                 <th>Customer name</th>
                                 <th>Shipping date</th>
-                                <th class="ac">Expected delivery date</th>
+                                <th>Expected delivery date</th>
                                 <th class="ac">Actions</th>
                             </tr>
                             <meta name="csrf-token" content="{{ csrf_token() }}">

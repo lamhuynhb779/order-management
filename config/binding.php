@@ -17,5 +17,10 @@ return [
             'repository' => \App\Repositories\Eloquents\EloquentAddressRepository::class,
             'policy' => '',
         ],
+        \App\Models\State::class => [
+            'contract' => \App\Repositories\Contracts\StateRepository::class,
+            'repository' => \App\Repositories\Eloquents\EloquentStateRepository::class,
+            'policy' => '',
+        ],
     ],
 ];

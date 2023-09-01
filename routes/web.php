@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StateManagementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,5 +30,11 @@ Route::group(['middleware' => ['unset_empty_req_params']], function () {
         Route::post('/', [OrderController::class, 'store']);
         Route::put('/{id}', [OrderController::class, 'update']);
         Route::delete('/{id}', [OrderController::class, 'delete']);
+    });
+
+    // State management
+    Route::group(['prefix' => '/order-states'], function () {
+        Route::get('/', [StateManagementController::class, 'index']);
+        Route::put('/{id}', [StateManagementController::class, 'update']);
     });
 });
