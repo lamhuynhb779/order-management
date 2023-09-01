@@ -13,13 +13,13 @@ class UpdateOrderRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|required|max:50',
-            'phone' => ['required', new PhoneRule()],
+            'name' => 'string|max:50',
+            'phone' => new PhoneRule(),
             'email' => 'email|nullable',
-            'shipping_address' => 'string|required|max:100',
-            'recipient_address' => 'string|required|max:100',
-            'shipping_date' => 'date|required',
-            'expected_delivery_date' => 'date|required',
+            'shipping_address' => 'string|max:100',
+            'recipient_address' => 'string|max:100',
+            'shipping_date' => 'date',
+            'expected_delivery_date' => 'date',
         ];
     }
 
@@ -28,15 +28,7 @@ class UpdateOrderRequest extends BaseRequest
      */
     protected function prepareForValidation(): void
     {
-        if ($this->has('type')) {
-            if (empty($this->type)) {
-                $this->query->remove('type');
-            } else {
-                $this->merge([
-                    'type' => $this->type,
-                ]);
-            }
-        }
+        //
     }
 
     protected function failedValidation(Validator $validator)

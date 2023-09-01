@@ -28,15 +28,7 @@ class StoreOrderRequest extends BaseRequest
      */
     protected function prepareForValidation(): void
     {
-        if ($this->has('type')) {
-            if (empty($this->type)) {
-                $this->query->remove('type');
-            } else {
-                $this->merge([
-                    'type' => $this->type,
-                ]);
-            }
-        }
+        //
     }
 
     protected function failedValidation(Validator $validator)

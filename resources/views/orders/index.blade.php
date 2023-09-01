@@ -38,14 +38,20 @@
         <div class="small-nav"> <a href="#">Dashboard</a> <span>&gt;</span> Current Articles </div>
         <!-- End Small Nav -->
         <!-- Message OK -->
+        @if (\Session::has('success'))
         <div class="msg msg-ok">
-            <p><strong>Your file was uploaded succesifully!</strong></p>
-            <a href="#" class="close">close</a> </div>
+            <p><strong>{!! \Session::get('success') !!}</strong></p>
+            <a href="#" class="close">close</a>
+        </div>
+        @endif
         <!-- End Message OK -->
         <!-- Message Error -->
+        @if (\Session::has('error'))
         <div class="msg msg-error">
-            <p><strong>You must select a file to upload first!</strong></p>
-            <a href="#" class="close">close</a> </div>
+            <p><strong>{!! \Session::get('error') !!}</strong></p>
+            <a href="#" class="close">close</a>
+        </div>
+        @endif
         <!-- End Message Error -->
         <br />
         <!-- Main -->
@@ -83,7 +89,7 @@
                                     <td>{{$order->customer_name}}</td>
                                     <td>{{$order->shipping_date}}</td>
                                     <td>{{$order->expected_delivery_date}}</td>
-                                    <td><a href="#" class="ico del">Delete</a><a href="#" class="ico edit">Edit</a></td>
+                                    <td><a href="#" class="ico del">Delete</a><a href="{{url('orders/' . $order->id)}}" class="ico edit">Edit</a></td>
                                 </tr>
                             @endforeach
                         </table>
@@ -121,4 +127,5 @@
 </div>
 <!-- End Footer -->
 </body>
+<script src="{{ asset('js/order.js')}}"></script>
 </html>

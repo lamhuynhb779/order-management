@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('homepage');
-});
-
-Route::group(['prefix' => '/orders', 'middleware' => []], function () {
-    Route::get('/', [OrderController::class, 'index']);
-    Route::post('/', [OrderController::class, 'store']);
+Route::group(['middleware' => ['unset_empty_req_params']], function () {
+    // Order management
+    Route::group(['prefix' => '/orders'], function () {
+        Route::get('/', [OrderController::class, 'index']);
+        Route::get('/{id}', [OrderController::class, 'show']);
+        Route::post('/', [OrderController::class, 'store']);
+        Route::put('/{id}', [OrderController::class, 'update']);
+        Route::delete('/', [OrderController::class, 'delete']);
+    });
 });

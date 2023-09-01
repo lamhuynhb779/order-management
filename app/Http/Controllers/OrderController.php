@@ -42,7 +42,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function show($id): JsonResponse
+    public function show($id)
     {
         $order = $this->orderRepository->findOne($id);
         if (! $order instanceof Order) {
@@ -52,9 +52,14 @@ class OrderController extends Controller
             ]);
         }
 
-        return response()->json([
-            'status' => 1,
-            'data' => ['order' => $order],
+        return view('orders.edit', [
+            'order' => $order,
+            'customer' => $order->customer,
+            'shippingAddress' => $order->shippingAddress,
+            'recipientAddress' => $order->recipientAddress,
+            'provinces' => ProvinceHelper::getAll(),
+            'districts' => DistrictHelper::getAll(),
+            'wards' => WardHelper::getAll(),
         ]);
     }
 
@@ -62,34 +67,26 @@ class OrderController extends Controller
      * @throws AuthorizationException
      * @throws \Exception
      */
-    public function store(StoreOrderRequest $request): JsonResponse
+    public function store(StoreOrderRequest $request): \Illuminate\Http\RedirectResponse
     {
         // Authorization
         //        $this->authorize('create', Order::class);
 
         $order = $this->orderService->createNew($request->validated());
         if (! $order instanceof Order) {
-            return response()->json([
-                'status' => 0,
-                'message' => 'Create order failed',
-            ]);
+            return redirect()->back()->with('error', 'Create order failed');
         }
 
-        return response()->json([
-            'status' => 1,
-            'message' => 'Create order success',
-        ], 201);
+        return redirect()->back()->with('success', 'Create order success');
     }
 
     /**
      * @throws \Exception
      */
-    public function update(UpdateOrderRequest $request): JsonResponse
+    public function update(UpdateOrderRequest $request, int $id): JsonResponse
     {
         try {
-            $request = $request->validated();
-
-            $order = $this->orderRepository->findOne($request['id']);
+            $order = $this->orderRepository->findOne($id);
             if (! $order instanceof Order) {
                 return response()->json([
                     'status' => 0,
@@ -97,7 +94,7 @@ class OrderController extends Controller
                 ]);
             }
 
-            $this->orderService->updateOrder($order, $request);
+            $this->orderService->updateOrder($order, $request->validated());
 
             return response()->json([
                 'status' => 1,

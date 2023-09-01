@@ -47,7 +47,10 @@ class AddressService
                     throw new \Exception('Shipping address is not found');
                 }
 
-                $address->update(['address' => $data['shipping_address']]);
+                $address->update([
+                    'address' => $data['shipping_address'],
+                    'full_address' => $data['shipping_address'],
+                ]);
             }
 
             if (isset($data['recipient_address'])) {
@@ -60,7 +63,10 @@ class AddressService
                     throw new \Exception('Recipient address is not found');
                 }
 
-                $address->update(['address' => $data['recipient_address']]);
+                $address->update([
+                    'address' => $data['recipient_address'],
+                    'full_address' => $data['recipient_address'],
+                ]);
             }
 
         } catch (\Exception $exception) {
