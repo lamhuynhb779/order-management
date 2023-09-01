@@ -6,8 +6,16 @@
     {{--    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />--}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css" media="all">
     <script src="{{ asset('js/jquery-3.7.1.min.js')}}"></script>
+    <!-- 1. Addchat css -->
+    <link href="{{asset('assets/addchat/css/addchat.min.css')}}" rel="stylesheet">
 </head>
 <body>
+<!-- 2. AddChat widget -->
+<div id="addchat_app"
+     data-baseurl="{{url('')}}"
+     data-csrfname="{{'X-CSRF-Token'}}"
+     data-csrftoken="{{csrf_token()}}"
+></div>
 <!-- Header -->
 <div id="header">
     <div class="shell">
@@ -103,6 +111,11 @@
     <div class="shell"> <span class="left">&copy; 2010 - CompanyName</span> <span class="right"> Design by <a href="http://chocotemplates.com">Chocotemplates.com</a> </span> </div>
 </div>
 <!-- End Footer -->
+<!-- 3. AddChat JS -->
+<!-- Modern browsers -->
+<script type="module" src="{{asset('assets/addchat/js/addchat.min.js')}}"></script>
+<!-- Fallback support for Older browsers -->
+<script nomodule src="{{asset('assets/addchat/js/addchat-legacy.min.js')}}"></script>
 </body>
 <script src="{{ asset('js/common.js')}}"></script>
 <script src="{{ asset('js/homepage.js')}}"></script>

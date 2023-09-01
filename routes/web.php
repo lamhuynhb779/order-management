@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
 Route::group(['middleware' => ['unset_empty_req_params']], function () {
     // Homepage
     Route::group(['prefix' => '/'], function () {
@@ -38,3 +42,10 @@ Route::group(['middleware' => ['unset_empty_req_params']], function () {
         Route::put('/{id}', [StateManagementController::class, 'update']);
     });
 });
+
+
+Addchat::routes();
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
