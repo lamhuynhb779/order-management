@@ -21,6 +21,6 @@ Route::group(['middleware' => ['unset_empty_req_params']], function () {
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::post('/', [OrderController::class, 'store']);
         Route::put('/{id}', [OrderController::class, 'update']);
-        Route::delete('/', [OrderController::class, 'delete']);
+        Route::delete('/{id}', [OrderController::class, 'delete']);
     });
 });

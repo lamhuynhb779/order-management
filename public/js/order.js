@@ -1,9 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let closeBtn = document.querySelector(".close");
+$(document).ready(function(){
+    let closeBtn = $(".close");
     if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            let msg = document.querySelector(".msg");
-            msg.style.display = 'none';
+        closeBtn.click(function (){
+            $(".msg").css('display', 'none');
         });
     }
+
+    $(".del").click(function(e){
+        e.preventDefault();
+        $.ajax({
+            url:"/orders/" + $(this).data('id'),
+            method:'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(res){
+                alert(res.message);
+                location.reload();
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+    });
 });

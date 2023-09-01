@@ -83,7 +83,7 @@ class OrderController extends Controller
     /**
      * @throws \Exception
      */
-    public function update(UpdateOrderRequest $request, int $id): JsonResponse
+    public function update(UpdateOrderRequest $request, int $id)
     {
         try {
             $order = $this->orderRepository->findOne($id);
@@ -96,16 +96,11 @@ class OrderController extends Controller
 
             $this->orderService->updateOrder($order, $request->validated());
 
-            return response()->json([
-                'status' => 1,
-                'message' => 'Update order success',
-            ]);
+            return redirect('/orders')->with('success', 'Update order success');
 
         } catch (\Exception $exception) {
-            return response()->json([
-                'status' => 0,
-                'message' => 'Update order failed',
-            ]);
+
+            return redirect('/orders')->with('error', 'Update order failed');
         }
     }
 

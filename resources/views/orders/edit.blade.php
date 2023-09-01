@@ -17,16 +17,7 @@
         </div>
         <!-- End Logo + Top Nav -->
         <!-- Main Nav -->
-        <div id="navigation">
-            <ul>
-                <li><a href="#" class="active"><span>Dashboard</span></a></li>
-                <li><a href="#"><span>New Articles</span></a></li>
-                <li><a href="#"><span>User Management</span></a></li>
-                <li><a href="#"><span>Photo Gallery</span></a></li>
-                <li><a href="#"><span>Products</span></a></li>
-                <li><a href="#"><span>Services Control</span></a></li>
-            </ul>
-        </div>
+        <x-menu/>
         <!-- End Main Nav -->
     </div>
 </div>
@@ -35,18 +26,8 @@
 <div id="container">
     <div class="shell">
         <!-- Small Nav -->
-        <div class="small-nav"> <a href="#">Dashboard</a> <span>&gt;</span> Edit Order </div>
+        <div class="small-nav"> <a href="{{ url('/orders') }}">Dashboard</a> <span>&gt;</span> Edit Order </div>
         <!-- End Small Nav -->
-        <!-- Message OK -->
-        <div class="msg msg-ok">
-            <p><strong>Your file was uploaded succesifully!</strong></p>
-            <a href="#" class="close">close</a> </div>
-        <!-- End Message OK -->
-        <!-- Message Error -->
-        <div class="msg msg-error">
-            <p><strong>You must select a file to upload first!</strong></p>
-            <a href="#" class="close">close</a> </div>
-        <!-- End Message Error -->
         <br />
         <!-- Main -->
         <div id="main">

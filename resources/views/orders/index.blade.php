@@ -5,6 +5,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     {{--    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />--}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css" media="all">
+    <script src="{{ asset('js/jquery-3.7.1.min.js')}}"></script>
 </head>
 <body>
 <!-- Header -->
@@ -17,16 +18,7 @@
         </div>
         <!-- End Logo + Top Nav -->
         <!-- Main Nav -->
-        <div id="navigation">
-            <ul>
-                <li><a href="#" class="active"><span>Dashboard</span></a></li>
-                <li><a href="#"><span>New Articles</span></a></li>
-                <li><a href="#"><span>User Management</span></a></li>
-                <li><a href="#"><span>Photo Gallery</span></a></li>
-                <li><a href="#"><span>Products</span></a></li>
-                <li><a href="#"><span>Services Control</span></a></li>
-            </ul>
-        </div>
+        <x-menu/>
         <!-- End Main Nav -->
     </div>
 </div>
@@ -34,9 +26,6 @@
 <!-- Container -->
 <div id="container">
     <div class="shell">
-        <!-- Small Nav -->
-        <div class="small-nav"> <a href="#">Dashboard</a> <span>&gt;</span> Current Articles </div>
-        <!-- End Small Nav -->
         <!-- Message OK -->
         @if (\Session::has('success'))
         <div class="msg msg-ok">
@@ -82,14 +71,18 @@
                                 <th class="ac">Expected delivery date</th>
                                 <th class="ac">Actions</th>
                             </tr>
+                            <meta name="csrf-token" content="{{ csrf_token() }}">
                             @foreach ($orders as $key => $order)
                                 <tr class="{{ $key % 2 === 0 ? '' : 'odd' }}">
                                     <td><input type="checkbox" class="checkbox" /></td>
-                                    <td><h3><a href="#">{{$order->code}}</a></h3></td>
+                                    <td><h3><a href="{{url('orders/' . $order->id)}}">{{$order->code}}</a></h3></td>
                                     <td>{{$order->customer_name}}</td>
                                     <td>{{$order->shipping_date}}</td>
                                     <td>{{$order->expected_delivery_date}}</td>
-                                    <td><a href="#" class="ico del">Delete</a><a href="{{url('orders/' . $order->id)}}" class="ico edit">Edit</a></td>
+                                    <td>
+                                        <a href="#" class="ico del" data-id="{{$order->id}}">Delete</a>
+                                        <a href="{{url('orders/' . $order->id)}}" class="ico edit">Edit</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </table>
