@@ -5,7 +5,6 @@ namespace App\Http\Requests\Order;
 use App\Http\Requests\BaseRequest;
 use App\Rules\PhoneRule;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class StoreOrderRequest extends BaseRequest
@@ -33,12 +32,9 @@ class StoreOrderRequest extends BaseRequest
 
     protected function failedValidation(Validator $validator)
     {
-        $errors = $validator->errors();
-        Log::info(__CLASS__.' - Banners request: '.$errors);
-
         throw new ValidationException(
             $validator,
-            response()->json((['status' => 400, 'invalid_fields' => $errors]), 400)
+            response()->json((['status' => 400, 'invalid_fields' => $validator->errors()]), 400)
         );
     }
 }

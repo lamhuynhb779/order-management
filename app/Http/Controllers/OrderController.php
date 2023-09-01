@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Helpers\District\DistrictHelper;
 use App\Helpers\Province\ProvinceHelper;
 use App\Helpers\Ward\WardHelper;
+use App\Http\Requests\Order\OrderRequest;
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Http\Requests\Order\UpdateOrderRequest;
 use App\Models\Order;
 use App\Repositories\Contracts\OrderRepository;
 use App\Services\Order\OrderService;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -134,5 +136,22 @@ class OrderController extends Controller
                 'message' => 'Delete order failed',
             ]);
         }
+    }
+
+    public function search(OrderRequest $request): JsonResponse
+    {
+        $paginate = $this->getPaginateStatus($request);
+
+        $request = $request->validated();
+
+        $orders = $this->orderRepository->findBy($request, function (Builder $builder) {
+            $builder->join('customers', 'customers.id', '=', 'orders.customer_id');
+            $builder->shippingState();
+        }, $paginate);
+
+        return response()->json([
+            'status' => 1,
+            'data' => $orders,
+        ]);
     }
 }

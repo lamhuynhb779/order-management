@@ -12,4 +12,11 @@ class State extends Model
      * @var string
      */
     protected $table = 'states';
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'name',
+        'slug',
+    ];
 }

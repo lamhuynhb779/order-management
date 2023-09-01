@@ -26,22 +26,6 @@
 <!-- Container -->
 <div id="container">
     <div class="shell">
-        <!-- Message OK -->
-        @if (\Session::has('success'))
-        <div class="msg msg-ok">
-            <p><strong>{!! \Session::get('success') !!}</strong></p>
-            <a href="#" class="close">close</a>
-        </div>
-        @endif
-        <!-- End Message OK -->
-        <!-- Message Error -->
-        @if (\Session::has('error'))
-        <div class="msg msg-error">
-            <p><strong>{!! \Session::get('error') !!}</strong></p>
-            <a href="#" class="close">close</a>
-        </div>
-        @endif
-        <!-- End Message Error -->
         <br />
         <!-- Main -->
         <div id="main">
@@ -52,11 +36,16 @@
                 <div class="box">
                     <!-- Box Head -->
                     <div class="box-head">
-                        <h2 class="left">Current Articles</h2>
+                        <h2 class="left">Shipping Orders</h2>
                         <div class="right">
-                            <label>search articles</label>
-                            <input type="text" class="field small-field" />
-                            <input type="submit" class="button" value="search" />
+                            <select name="search-options" id="search-options" class="field small-field left">
+                                <option value="order_number">Order number</option>
+                                <option value="customer_name">Customer name</option>
+                                <option value="shipping_date">Shipping date</option>
+                            </select>
+                            <input type="text" class="field small-field" id="search-value"/>
+                            <input type="date" class="field small-field" id="search-date"/>
+                            <input type="submit" class="button-search" value="search" />
                         </div>
                     </div>
                     <!-- End Box Head -->
@@ -69,9 +58,9 @@
                                 <th>Customer name</th>
                                 <th>Shipping date</th>
                                 <th class="ac">Expected delivery date</th>
-                                <th class="ac">Actions</th>
+                                <th class="ac">State</th>
                             </tr>
-                            <meta name="csrf-token" content="{{ csrf_token() }}">
+                            <tbody id="order-list">
                             @foreach ($orders as $key => $order)
                                 <tr class="{{ $key % 2 === 0 ? '' : 'odd' }}">
                                     <td><input type="checkbox" class="checkbox" /></td>
@@ -79,12 +68,10 @@
                                     <td>{{$order->customer->name}}</td>
                                     <td>{{$order->shipping_date}}</td>
                                     <td>{{$order->expected_delivery_date}}</td>
-                                    <td>
-                                        <a href="#" class="ico del" data-id="{{$order->id}}">Delete</a>
-                                        <a href="{{url('orders/' . $order->id)}}" class="ico edit">Edit</a>
-                                    </td>
+                                    <td>{{\App\Helpers\Order\OrderHelper::getState($order->state_id)}}</td>
                                 </tr>
                             @endforeach
+                            </tbody>
                         </table>
                         <!-- Pagging -->
                         <div class="pagging">
@@ -96,17 +83,9 @@
                     <!-- Table -->
                 </div>
                 <!-- End Box -->
-                <!-- Box -->
-                <x-add-order/>
-                <!-- End Box -->
             </div>
             <!-- End Content -->
             <!-- Sidebar -->
-            <div id="sidebar">
-                <!-- Box -->
-                <x-action-management/>
-                <!-- End Box -->
-            </div>
             <!-- End Sidebar -->
             <div class="cl">&nbsp;</div>
         </div>
@@ -115,10 +94,16 @@
 </div>
 <!-- End Container -->
 <!-- Footer -->
-<div id="footer">
+<div id="footer" style="
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;"
+>
     <div class="shell"> <span class="left">&copy; 2010 - CompanyName</span> <span class="right"> Design by <a href="http://chocotemplates.com">Chocotemplates.com</a> </span> </div>
 </div>
 <!-- End Footer -->
 </body>
-<script src="{{ asset('js/order.js')}}"></script>
+<script src="{{ asset('js/common.js')}}"></script>
+<script src="{{ asset('js/homepage.js')}}"></script>
 </html>

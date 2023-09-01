@@ -3,22 +3,22 @@
 namespace App\Http\Requests\Order;
 
 use App\Http\Requests\BaseRequest;
-use App\Rules\PhoneRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
-class UpdateOrderRequest extends BaseRequest
+class OrderRequest extends BaseRequest
 {
     public function rules(): array
     {
         return [
-            'name' => 'string|max:50',
-            'phone' => new PhoneRule(),
-            'email' => 'email|nullable',
-            'shipping_address' => 'string|max:100',
-            'recipient_address' => 'string|max:100',
-            'shipping_date' => 'date',
-            'expected_delivery_date' => 'date',
+            'search' => 'array',
+            'search.*' => 'array',
+            'search.*.field' => 'string',
+            'search.*.value' => 'present|required_with:search.*.field',
+            'filter.shipping_date' => 'date',
+            'paginate' => 'bool',
+            'limit' => 'numeric',
+            'sort' => 'string',
         ];
     }
 

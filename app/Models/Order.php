@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderState;
 use App\Scopes\Order\OrderScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,6 +32,7 @@ class Order extends Model
         'shipping_address_id',
         'shipping_date',
         'expected_delivery_date',
+        'state_id',
     ];
 
     /**
@@ -45,12 +47,18 @@ class Order extends Model
         'customer_id' => 'integer',
         'recipient_address_id' => 'integer',
         'shipping_address_id' => 'integer',
+        'state_id' => 'integer',
     ];
 
     protected static function boot()
     {
         parent::boot();
         static::addGlobalScope(new OrderScope);
+    }
+
+    public function scopeShippingState($query)
+    {
+        return $query->where('orders.state_id', OrderState::SHIPPING);
     }
 
     public function customer(): BelongsTo
@@ -66,5 +74,10 @@ class Order extends Model
     public function recipientAddress(): hasOne
     {
         return $this->hasOne(Address::class, 'id', 'recipient_address_id');
+    }
+
+    public function state(): HasOne
+    {
+        return $this->hasOne(State::class, 'id', 'state_id');
     }
 }

@@ -141,7 +141,12 @@ textarea.size1 { height:180px; }
 .add-button:hover { color:#333;}
 
 
-#footer { height:44px; background:url('../images/footer.gif'); line-height:44px; color:#fff;}
+#footer {
+    height:44px;
+    background:url('../images/footer.gif');
+    line-height:44px;
+    color:#fff;
+}
 #footer a{ color:#fff; }
 
 
