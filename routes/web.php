@@ -43,7 +43,6 @@ Route::group(['middleware' => ['unset_empty_req_params']], function () {
     });
 });
 
-
 Addchat::routes();
 
 Auth::routes();

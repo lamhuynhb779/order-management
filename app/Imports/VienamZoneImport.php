@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Validators\Failure;
 
-class VienamZoneImport implements WithHeadingRow, SkipsOnFailure, ToArray, WithChunkReading
+class VienamZoneImport implements SkipsOnFailure, ToArray, WithChunkReading, WithHeadingRow
 {
     protected $districtMap = [];
 

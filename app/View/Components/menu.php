@@ -2,10 +2,13 @@
 
 namespace App\View\Components;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class menu extends Component
 {
+    protected $user;
+
     /**
      * Create a new component instance.
      *
@@ -13,7 +16,7 @@ class menu extends Component
      */
     public function __construct()
     {
-        //
+        $this->user = Auth::user();
     }
 
     /**
@@ -23,6 +26,8 @@ class menu extends Component
      */
     public function render()
     {
-        return view('components.menu');
+        return view('components.menu', [
+            'currentUser' => $this->user,
+        ]);
     }
 }
