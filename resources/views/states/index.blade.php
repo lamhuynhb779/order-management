@@ -13,8 +13,8 @@
     <div class="shell">
         <!-- Logo + Top Nav -->
         <div id="top">
-            <h1><a href="#">SpringTime</a></h1>
-            <div id="top-navigation"> Welcome <a href="#"><strong>Administrator</strong></a> <span>|</span> <a href="#">Help</a> <span>|</span> <a href="#">Profile Settings</a> <span>|</span> <a href="#">Log out</a> </div>
+            <h1><a href="#">Order Management</a></h1>
+            <x-user-navbar/>
         </div>
         <!-- End Logo + Top Nav -->
         <!-- Main Nav -->
@@ -37,11 +37,6 @@
                     <!-- Box Head -->
                     <div class="box-head">
                         <h2 class="left">State management</h2>
-                        <div class="right">
-                            <label>search articles</label>
-                            <input type="text" class="field small-field" />
-                            <input type="submit" class="button" value="search" />
-                        </div>
                     </div>
                     <!-- End Box Head -->
                     <!-- Table -->
