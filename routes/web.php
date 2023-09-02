@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::group(['middleware' => ['unset_empty_req_params']], function () {
     // Homepage
-    Route::group(['prefix' => '/'], function () {
+    Route::group(['prefix' => '/home'], function () {
         Route::get('/', [HomepageController::class, 'index']);
     });
 
@@ -48,4 +48,4 @@ Addchat::routes();
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
