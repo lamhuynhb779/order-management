@@ -6,6 +6,7 @@ use App\Enums\OrderState;
 use App\Scopes\Order\OrderScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -79,5 +80,10 @@ class Order extends Model
     public function state(): HasOne
     {
         return $this->hasOne(State::class, 'id', 'state_id');
+    }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'order_id', 'id');
     }
 }

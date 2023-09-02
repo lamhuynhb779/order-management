@@ -1,4 +1,16 @@
 $(document).ready(function(){
+    $('#add-button').click(function (e) {
+        e.preventDefault();
+        let span = $(this).find('span')[0];
+        if (span.innerText === 'Add new order') {
+            span.innerText = 'Hide new order';
+            $(".box-add").css('opacity', 1);
+        } else {
+            span.innerText = 'Add new order';
+            $(".box-add").css('opacity', 0);
+        }
+    });
+
     let closeBtn = $(".close");
     if (closeBtn) {
         closeBtn.click(function (){

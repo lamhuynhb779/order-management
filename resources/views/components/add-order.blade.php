@@ -1,4 +1,4 @@
-<div class="box">
+<div class="box box-add" style="opacity: 0;">
     <!-- Box Head -->
     <div class="box-head">
         <h2>Add New Order</h2>

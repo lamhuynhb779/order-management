@@ -22,5 +22,10 @@ return [
             'repository' => \App\Repositories\Eloquents\EloquentStateRepository::class,
             'policy' => '',
         ],
+        \App\Models\Rating::class => [
+            'contract' => \App\Repositories\Contracts\RatingRepository::class,
+            'repository' => \App\Repositories\Eloquents\EloquentRatingRepository::class,
+            'policy' => '',
+        ],
     ],
 ];

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\StateManagementController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['unset_empty_req_params']], function () {
+Route::group(['middleware' => ['auth', 'unset_empty_req_params']], function () {
     // Homepage
     Route::group(['prefix' => '/home'], function () {
         Route::get('/', [HomepageController::class, 'index']);
@@ -40,6 +41,11 @@ Route::group(['middleware' => ['unset_empty_req_params']], function () {
     Route::group(['prefix' => '/order-states'], function () {
         Route::get('/', [StateManagementController::class, 'index']);
         Route::put('/{id}', [StateManagementController::class, 'update']);
+    });
+
+    // Rating
+    Route::group(['prefix' => '/ratings'], function () {
+        Route::post('/', [RatingController::class, 'store']);
     });
 });
 

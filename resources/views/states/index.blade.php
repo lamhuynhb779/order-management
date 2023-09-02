@@ -26,6 +26,22 @@
 <!-- Container -->
 <div id="container">
     <div class="shell">
+        <!-- Message OK -->
+        @if (\Session::has('success'))
+            <div class="msg msg-ok">
+                <p><strong>{!! \Session::get('success') !!}</strong></p>
+                <a href="#" class="close">close</a>
+            </div>
+        @endif
+        <!-- End Message OK -->
+        <!-- Message Error -->
+        @if (\Session::has('error'))
+            <div class="msg msg-error">
+                <p><strong>{!! \Session::get('error') !!}</strong></p>
+                <a href="#" class="close">close</a>
+            </div>
+        @endif
+        <!-- End Message Error -->
         <br />
         <!-- Main -->
         <div id="main">
@@ -67,7 +83,11 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <a href="" class="ico btn-update" data-id="{{$order->id}}" data-state="{{$order->state_id}}">Update</a>
+                                        @if ($order->state_id === 6)
+                                            <a class="ico" id="review-add-btn" data-id="{{$order->id}}">Rating</a>
+                                        @else
+                                            <a class="ico btn-update" data-id="{{$order->id}}" data-state="{{$order->state_id}}">Update</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -90,6 +110,7 @@
     </div>
 </div>
 <!-- End Container -->
+<x-rating />
 <!-- Footer -->
 <div id="footer" style="
     position: absolute;
