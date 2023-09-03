@@ -5,8 +5,9 @@ $(document).ready(function(){
     $("#search-date").css('display', 'none');
 
     $("#search-options").change(function () {
-        const optionSelected = $(this).find("option:selected");
-        const valueSelected = optionSelected.val();
+        let optionSelected = $(this).find("option:selected");
+        let valueSelected = optionSelected.val();
+
         if (valueSelected === 'shipping_date') {
             $("#search-value").css('display', 'none');
             $("#search-date").css('display', 'block');
@@ -17,20 +18,21 @@ $(document).ready(function(){
     });
 
     $(".button-search").click(function(){
-        const searchOption = $('#search-options').find(":selected").val();
+
+        let searchOption = $('#search-options').find(":selected").val();
         let queryString = '';
         let searchValue = $('#search-value').val();
+        let searchDate = $('#search-date').val();
 
         if (searchOption === 'order_number') {
             queryString = '?search[0][field]=code&search[0][value]=' + searchValue;
         } else if (searchOption === 'customer_name') {
             queryString = '?search[0][field]=name&search[0][value]=' + searchValue;
         } else if (searchOption === 'shipping_date') {
-            let searchValue = $('#search-date').val();
-            queryString = '?filter[shipping_date]=' + searchValue;
+            queryString = '?filter[shipping_date]=' + searchDate;
         }
 
-        if (searchValue !== '') {
+        if (searchValue !== '' || searchDate !== '') {
             $.ajax({
                 url:"/orders/search" + queryString,
                 method:'GET',
