@@ -29,18 +29,19 @@ Route::group(['middleware' => ['auth', 'unset_empty_req_params']], function () {
 
     // Order management
     Route::group(['prefix' => '/orders'], function () {
-        Route::get('/', [OrderController::class, 'index']);
+        Route::get('/', [OrderController::class, 'index'])->middleware('role_or_permission:staff');
         Route::get('/search', [OrderController::class, 'search']);
-        Route::get('/{id}', [OrderController::class, 'show']);
+        Route::get('/edit/{id}', [OrderController::class, 'show'])->middleware('role_or_permission:staff');
+        Route::get('/view/{id}', [OrderController::class, 'review']);
         Route::post('/', [OrderController::class, 'store']);
-        Route::put('/{id}', [OrderController::class, 'update']);
-        Route::delete('/{id}', [OrderController::class, 'delete']);
+        Route::put('/{id}', [OrderController::class, 'update'])->middleware('role_or_permission:staff');
+        Route::delete('/{id}', [OrderController::class, 'delete'])->middleware('role_or_permission:staff');
     });
 
     // State management
     Route::group(['prefix' => '/order-states'], function () {
-        Route::get('/', [StateManagementController::class, 'index']);
-        Route::put('/{id}', [StateManagementController::class, 'update']);
+        Route::get('/', [StateManagementController::class, 'index'])->middleware('role_or_permission:staff');
+        Route::put('/{id}', [StateManagementController::class, 'update'])->middleware('role_or_permission:staff');
     });
 
     // Rating

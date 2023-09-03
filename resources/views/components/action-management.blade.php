@@ -6,24 +6,24 @@
     <!-- End Box Head-->
     <div class="box-content"> <a href="#" class="add-button" id="add-button"><span>Add new order</span></a>
         <div class="cl">&nbsp;</div>
-        <p class="select-all">
-            <input type="checkbox" class="checkbox" />
-            <label>select all</label>
-        </p>
-        <p><a href="#">Delete Selected</a></p>
+{{--        <p class="select-all">--}}
+{{--            <input type="checkbox" class="checkbox" />--}}
+{{--            <label>select all</label>--}}
+{{--        </p>--}}
+{{--        <p><a href="#">Delete Selected</a></p>--}}
         <!-- Sort -->
-        <div class="sort">
-            <label>Sort by</label>
-            <select class="field">
-                <option value="">Title</option>
-            </select>
-            <select class="field">
-                <option value="">Date</option>
-            </select>
-            <select class="field">
-                <option value="">Author</option>
-            </select>
-        </div>
+{{--        <div class="sort">--}}
+{{--            <label>Sort by</label>--}}
+{{--            <select class="field">--}}
+{{--                <option value="">Title</option>--}}
+{{--            </select>--}}
+{{--            <select class="field">--}}
+{{--                <option value="">Date</option>--}}
+{{--            </select>--}}
+{{--            <select class="field">--}}
+{{--                <option value="">Author</option>--}}
+{{--            </select>--}}
+{{--        </div>--}}
         <!-- End Sort -->
     </div>
 </div>

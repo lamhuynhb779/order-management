@@ -65,6 +65,27 @@ class OrderController extends Controller
         ]);
     }
 
+    public function review($id)
+    {
+        $order = $this->orderRepository->findOne($id);
+        if (! $order instanceof Order) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Order is not found',
+            ]);
+        }
+
+        return view('orders.review', [
+            'order' => $order,
+            'customer' => $order->customer,
+            'shippingAddress' => $order->shippingAddress,
+            'recipientAddress' => $order->recipientAddress,
+            'provinces' => ProvinceHelper::getAll(),
+            'districts' => DistrictHelper::getAll(),
+            'wards' => WardHelper::getAll(),
+        ]);
+    }
+
     /**
      * @throws AuthorizationException
      * @throws \Exception

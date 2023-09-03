@@ -26,7 +26,7 @@
 <div id="container">
     <div class="shell">
         <!-- Small Nav -->
-        <div class="small-nav"> <a href="{{ url('/home') }}">Dashboard</a> <span>&gt;</span> Edit Order </div>
+        <div class="small-nav"> <a href="{{ url('/home') }}">Dashboard</a> <span>&gt;</span> Review Order </div>
         <!-- End Small Nav -->
         <br />
         <!-- Main -->
@@ -38,7 +38,7 @@
                 <!-- End Box -->
                 <!-- Box -->
                 <div class="edit-order-component">
-                    <x-edit-order
+                    <x-review-order
                         :order="$order"
                         :customer="$customer"
                         :shippingAddress="$shippingAddress"

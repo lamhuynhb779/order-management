@@ -13,7 +13,7 @@
     <div class="shell">
         <!-- Logo + Top Nav -->
         <div id="top">
-            <h1><a href="#">Order Management</a></h1>
+            <h1><a href="{{url('/home')}}">Order Management</a></h1>
             <x-user-navbar/>
         </div>
         <!-- End Logo + Top Nav -->

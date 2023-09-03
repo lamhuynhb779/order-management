@@ -9,7 +9,7 @@
     <!-- 1. Addchat css -->
     <link href="{{asset('assets/addchat/css/addchat.min.css')}}" rel="stylesheet">
 </head>
-<body>
+<body style="position: relative;">
 <!-- 2. AddChat widget -->
 <div id="addchat_app"
      data-baseurl="{{url('')}}"
@@ -72,7 +72,7 @@
                             @foreach ($orders as $key => $order)
                                 <tr class="{{ $key % 2 === 0 ? '' : 'odd' }}">
                                     <td><input type="checkbox" class="checkbox" /></td>
-                                    <td><h3><a href="{{url('orders/' . $order->id)}}">{{$order->code}}</a></h3></td>
+                                    <td><h3><a href="{{url('orders/view/' . $order->id)}}">{{$order->code}}</a></h3></td>
                                     <td>{{$order->customer->name}}</td>
                                     <td>{{$order->shipping_date}}</td>
                                     <td>{{$order->expected_delivery_date}}</td>
@@ -91,9 +91,15 @@
                     <!-- Table -->
                 </div>
                 <!-- End Box -->
+                <x-add-order/>
             </div>
             <!-- End Content -->
             <!-- Sidebar -->
+            <div id="sidebar">
+                <!-- Box -->
+                <x-action-management/>
+                <!-- End Box -->
+            </div>
             <!-- End Sidebar -->
             <div class="cl">&nbsp;</div>
         </div>
@@ -119,4 +125,5 @@
 </body>
 <script src="{{ asset('js/common.js')}}"></script>
 <script src="{{ asset('js/homepage.js')}}"></script>
+{{--<script src="{{ asset('js/order.js')}}"></script>--}}
 </html>
