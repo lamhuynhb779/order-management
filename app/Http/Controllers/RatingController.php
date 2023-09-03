@@ -32,7 +32,7 @@ class RatingController extends Controller
 
             $order = $this->orderRepository->findOneBy([
                 'id' => $request['order_id'],
-                'customer_id' => Auth::user()->id,
+                'created_by' => Auth::user()->id,
             ]);
             if (! $order instanceof Order) {
                 return redirect()->back()->with('error', 'Order is not found');

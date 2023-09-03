@@ -23,6 +23,8 @@ class CreateOrdersTable extends Migration
             $table->date('expected_delivery_date');
             $table->tinyInteger('state_id')->default(1);
             $table->tinyInteger('status')->default(1);
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

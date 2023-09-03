@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Repositories\Contracts\OrderRepository;
 use App\Services\Address\AddressService;
 use App\Services\Customer\CustomerService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class OrderService
@@ -59,6 +60,7 @@ class OrderService
             'shipping_address_id' => $shippingAddress->id,
             'shipping_date' => $data['shipping_date'],
             'expected_delivery_date' => $data['expected_delivery_date'],
+            'created_by' => Auth::user()->id,
         ]);
     }
 
@@ -86,6 +88,7 @@ class OrderService
                 $orderData->put('expected_delivery_date', $data['expected_delivery_date']);
             }
             if (! $orderData->isEmpty()) {
+                $orderData->put('updated_by', Auth::user()->id);
                 $order->update($orderData->all());
             }
         } catch (\Exception $exception) {

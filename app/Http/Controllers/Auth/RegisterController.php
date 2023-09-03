@@ -72,7 +72,7 @@ class RegisterController extends Controller
         if (substr($data['email'], 0, 5) === 'staff') {
             $newUser->assignRole('staff');
         } else {
-            $newUser->assignRole('customer');
+            $newUser->assignRole('guest');
         }
 
         return $newUser;

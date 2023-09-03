@@ -17,8 +17,8 @@ class RoleSeeder extends Seeder
     {
         /** @var Role $staffRole */
         $staffRole = Role::create(['name' => 'staff']);
-        /** @var Role $customerRole */
-        $customerRole = Role::create(['name' => 'customer']);
+        /** @var Role $guestRole */
+        $guestRole = Role::create(['name' => 'guest']);
 
         $permissionViewHomepage = Permission::create(['name' => 'view homepage']);
         $permissionViewOrderManagement = Permission::create(['name' => 'view order management']);
@@ -28,6 +28,6 @@ class RoleSeeder extends Seeder
         $staffRole->givePermissionTo($permissionViewOrderManagement);
         $staffRole->givePermissionTo($permissionViewStateManagement);
 
-        $customerRole->givePermissionTo($permissionViewHomepage);
+        $guestRole->givePermissionTo($permissionViewHomepage);
     }
 }

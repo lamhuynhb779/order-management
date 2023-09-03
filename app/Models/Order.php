@@ -34,6 +34,8 @@ class Order extends Model
         'shipping_date',
         'expected_delivery_date',
         'state_id',
+        'created_by',
+        'updated_by',
     ];
 
     /**
@@ -49,6 +51,8 @@ class Order extends Model
         'recipient_address_id' => 'integer',
         'shipping_address_id' => 'integer',
         'state_id' => 'integer',
+        'created_by' => 'integer',
+        'updated_by' => 'integer',
     ];
 
     protected static function boot()
@@ -85,5 +89,15 @@ class Order extends Model
     public function ratings(): HasMany
     {
         return $this->hasMany(Rating::class, 'order_id', 'id');
+    }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function updatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
     }
 }
