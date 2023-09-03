@@ -125,5 +125,5 @@
 </body>
 <script src="{{ asset('js/common.js')}}"></script>
 <script src="{{ asset('js/homepage.js')}}"></script>
-{{--<script src="{{ asset('js/order.js')}}"></script>--}}
+<script src="{{ asset('js/order.js')}}"></script>
 </html>

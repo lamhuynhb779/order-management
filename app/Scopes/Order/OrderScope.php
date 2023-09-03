@@ -2,6 +2,7 @@
 
 namespace App\Scopes\Order;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
@@ -11,8 +12,10 @@ class OrderScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        if (Auth::user()->hasRole('guest')) {
-            $builder->where('created_by', Auth::user()->id);
+        /** @var User $user */
+        $user = Auth::user();
+        if ($user->hasRole('guest')) {
+            $builder->where('created_by', $user->id);
         }
 
         $builder->where('orders.status', 1);
