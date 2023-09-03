@@ -46,6 +46,13 @@
                 <label>Expected delivery date</label>
                 <input type="date" class="field size1" id="expected_delivery_date" name="expected_delivery_date" value="{{$order->expected_delivery_date}}" disabled>
             </p>
+            <p class="inline-field">
+                <label>Reviews</label>
+                @foreach($reviews as $review)
+                    {{$review->star}} ★ - {{$review->comment}}
+                    <br/>
+                @endforeach
+            </p>
         </div>
         <!-- End Form -->
     </form>

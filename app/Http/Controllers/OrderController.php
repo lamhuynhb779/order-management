@@ -78,6 +78,7 @@ class OrderController extends Controller
         return view('orders.review', [
             'order' => $order,
             'customer' => $order->customer,
+            'reviews' => $order->ratings->all(),
             'shippingAddress' => $order->shippingAddress,
             'recipientAddress' => $order->recipientAddress,
             'provinces' => ProvinceHelper::getAll(),

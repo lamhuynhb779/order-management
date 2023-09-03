@@ -43,6 +43,7 @@
                         :customer="$customer"
                         :shippingAddress="$shippingAddress"
                         :recipientAddress="$recipientAddress"
+                        :reviews="$reviews"
                     />
                 </div>
                 <!-- End Box -->

@@ -75,10 +75,10 @@ label {
 input,
     /* input:not(input[type='radio']), */
     /* input:not(type='radio'), */
-select, .rate, textarea, button {
+/*select, .rate, textarea, button {
     font-size: 16px;
     padding: 8px;
-}
+}*/
 input[type="radio"] {
     box-shadow: none;
 }

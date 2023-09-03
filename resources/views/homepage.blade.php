@@ -53,7 +53,7 @@
                             </select>
                             <input type="text" class="field small-field" id="search-value"/>
                             <input type="date" class="field small-field" id="search-date"/>
-                            <input type="submit" class="button-search" value="search" />
+                            <input type="submit" class="button-search" value="search" style="font-family: Verdana, sans-serif; font-size: 13px;"/>
                         </div>
                     </div>
                     <!-- End Box Head -->
@@ -67,6 +67,7 @@
                                 <th>Shipping date</th>
                                 <th>Expected delivery date</th>
                                 <th>State</th>
+                                <th>Action</th>
                             </tr>
                             <tbody id="order-list">
                             @foreach ($orders as $key => $order)
@@ -77,6 +78,12 @@
                                     <td>{{$order->shipping_date}}</td>
                                     <td>{{$order->expected_delivery_date}}</td>
                                     <td>{{\App\Helpers\Order\OrderHelper::getState($order->state_id)}}</td>
+                                    <td>
+                                        <a class="ico" href="{{url('orders/view/' . $order->id)}}">View</a>
+                                        @if ($order->state_id === 6)
+                                            <a class="ico" id="review-add-btn" data-id="{{$order->id}}">Rating</a>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -122,6 +129,7 @@
 <script type="module" src="{{asset('assets/addchat/js/addchat.min.js')}}"></script>
 <!-- Fallback support for Older browsers -->
 <script nomodule src="{{asset('assets/addchat/js/addchat-legacy.min.js')}}"></script>
+<x-rating />
 </body>
 <script src="{{ asset('js/common.js')}}"></script>
 <script src="{{ asset('js/homepage.js')}}"></script>
