@@ -44,7 +44,7 @@ $(document).ready(function(){
                         $.each(orders, function (i, order) {
                             data = '<tr>';
                             data += '<td><input type="checkbox" class="checkbox" /></td>';
-                            data += '<td><h3><a href="/orders/' + order.id + '">'+ order.code +'</a></h3></td>';
+                            data += '<td><h3><a href="/orders/view/' + order.id + '">'+ order.code +'</a></h3></td>';
                             data += '<td>' + order.name + '</td>';
                             data += '<td>' + order.shipping_date + '</td>';
                             data += '<td>' + order.expected_delivery_date + '</td>';

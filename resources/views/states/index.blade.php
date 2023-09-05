@@ -69,7 +69,7 @@
                             <meta name="csrf-token" content="{{ csrf_token() }}">
                             @foreach ($orders as $key => $order)
                                 <tr class="{{ $key % 2 === 0 ? '' : 'odd' }}">
-                                    <td><h3><a href="{{url('orders/' . $order->id)}}">{{$order->code}}</a></h3></td>
+                                    <td><h3><a href="{{url('orders/view/' . $order->id)}}">{{$order->code}}</a></h3></td>
                                     <td>{{$order->customer->name}}</td>
                                     <td>{{$order->shipping_date}}</td>
                                     <td>{{$order->expected_delivery_date}}</td>

@@ -81,7 +81,7 @@
                                     <td>
                                         <a class="ico" href="{{url('orders/view/' . $order->id)}}">View</a>
                                         @if ($order->state_id === 6)
-                                            <a class="ico" id="review-add-btn" data-id="{{$order->id}}">Rating</a>
+                                            <a class="ico review-add-btn" id="review-add-btn" data-id="{{$order->id}}">Rating</a>
                                         @endif
                                     </td>
                                 </tr>

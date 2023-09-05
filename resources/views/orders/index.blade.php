@@ -70,13 +70,13 @@
                             @foreach ($orders as $key => $order)
                                 <tr class="{{ $key % 2 === 0 ? '' : 'odd' }}">
                                     <td><input type="checkbox" class="checkbox" /></td>
-                                    <td><h3><a href="{{url('orders/' . $order->id)}}">{{$order->code}}</a></h3></td>
+                                    <td><h3><a href="{{url('orders/view/' . $order->id)}}">{{$order->code}}</a></h3></td>
                                     <td>{{$order->customer->name}}</td>
                                     <td>{{$order->shipping_date}}</td>
                                     <td>{{$order->expected_delivery_date}}</td>
                                     <td>
                                         <a href="#" class="ico del" data-id="{{$order->id}}">Delete</a>
-                                        <a href="{{url('orders/' . $order->id)}}" class="ico edit">Edit</a>
+                                        <a href="{{url('orders/edit/' . $order->id)}}" class="ico edit">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach
